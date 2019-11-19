@@ -54,8 +54,8 @@ python MDRNN_training.py
 ```
 The result of the training is the MDRNN_best.pth file, which contains the trained weights for the MDRNN.
 The MDRNN_training.py script uses the following two scripts:
-- MDRNN_dataset_modul.py with the definition of the VAE_dataset class 
-- MDRNN_model.py with the implementation of the VAE model
+- MDRNN_dataset_modul.py with the definition of the MDRNN_dataset class 
+- MDRNN_model.py with the implementation of the MDRNN model
 
 
 ### Training the Controller
