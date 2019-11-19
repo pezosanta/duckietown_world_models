@@ -78,7 +78,7 @@ env.seed(args.seed)
 
 # Agent
 #agent = SAC(env.observation_space.shape[1], env.action_space, args)
-agent = SAC(num_inputs = LSIZE, env.action_space, args)
+agent = SAC(num_inputs = LSIZE, action_space = env.action_space, args = args)
 
 
 #TesnorboardX
