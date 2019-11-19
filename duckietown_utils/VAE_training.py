@@ -55,7 +55,7 @@ def train(epoch):
 						100. * batch_idx / len(train_loader),
 						loss.item() / len(data)))
 
-				PATH = os.getcwd() + '/VAE_best.pth'
+				PATH = os.getcwd() + '/best_VAE.pth'
 				torch.save({
 					'epoch': current_epoch,
 					'model_state_dict': model.state_dict(),
