@@ -10,9 +10,9 @@ from duckietown_utils.VAE_model import VAE
 
 LSIZE = 64
 ASIZE = 2
-RSIZE = 256
-VAE_CHECKPOINT_PATH = 'C://Users//Tony Stark//Desktop//Deep Learning a Gyakorlatban//Házi//gym-duckietown//reinforcement_learning_pranz24//duckietown_utils//best_vae.tar'
-
+RSIZE = 25
+VAE_CHECKPOINT_PATH = './duckietown_utils/best_VAE.pth'
+#VAE_CHECKPOINT_PATH = 'best_VAE.pth'
 
 class VAEWrapper(gym.ObservationWrapper):
     def __init__(self, env = None):
