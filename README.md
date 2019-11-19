@@ -8,6 +8,13 @@ Our Controller is based on the following repository: https://github.com/pranz24/
 The scripts described below are located in the duckietown_utils directory of this branch.
 
 ### Generating rollouts for training
+The following directory structure needs to be created:
+```bash
+└── duckietown_utils
+    └── datasets
+        ├── duckie
+        └── images
+```
 Rollouts are generated using the rollout_generator.py script, e.g.
 ```bash
 python rollout_generator.py 5 0 0
@@ -16,6 +23,18 @@ rollout_generator.py script has three command line arguments:
 1. number of rollouts to generate
 2. integer to switch between training data and testing data generation mode (1 for training data, rollouts will have 'train' in their filenames; 0 for testing data, rollouts will have 'test' in their filenames)
 3. integer to switch between map usage modes (0 for exclusively using the 'udem1' map, 1 for changing between available maps)
+
+
+
+### Visualising the rollouts
+The generated rollouts can be visualised using the visualise_rollouts.py script, e.g.
+```bash
+python visualise_rollouts.py 5 0
+```
+visualise_rollouts.py script has two command line arguments:
+1. ID of the rollout to visualise (number in the rollout's filename)
+2. integer to switch between training data and testing data generation mode (1 for training data, rollouts with 'train' in their filenames; 0 for testing data, rollouts with 'test' in their filenames)
+
 
 ### Training the VAE
 The VAE can be trained using the VAE_training.py script:
