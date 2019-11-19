@@ -25,7 +25,7 @@ rollout_generator.py script has three command line arguments:
 2. integer to switch between training data and testing data generation mode (1 for training data, rollouts will have 'train' in their filenames; 0 for testing data, rollouts will have 'test' in their filenames)
 3. integer to switch between map usage modes (0 for exclusively using the 'udem1' map, 1 for changing between available maps)
 
-
+We use two additional scripts, which are modifying the default behaviour of the duckietown gym. Previous studies have shown that the built-in reward function of the duckietown gym needs improvements, which are implemented in the rewared_wrappers.py script. In addition, we use an action wrapper (action_wrappers.py) which makes it possible to change between discrete and continuous action types.
 
 ### Visualising the rollouts
 The generated rollouts can be visualised using the visualise_rollouts.py script, e.g.
@@ -59,8 +59,11 @@ The MDRNN_training.py script uses the following two scripts:
 
 
 ### Training the Controller
+
+
 The Controller can be trained using the main.py script:
 ```bash
 python main.py
 ```
-The main.py script uses the observation_wrapper.py script to access the already trained VAE and MDRNN models.
+We use a SAC controller, which is a Reinforcement Learning algorithm. As an input it takes a 1D-array (length: 128) containing the latent vector corresponding to the current observation (length: 64) and the predicted 
+We observation_wrapper.py script to access the already trained VAE and MDRNN models.
