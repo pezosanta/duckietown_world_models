@@ -48,6 +48,14 @@ The VAE_training.py script uses the following two scripts:
 - VAE_model.py with the implementation of the VAE model
 
 ### Training the MDRNN
+The MDRNN can be trained using the MDRNN_training.py script:
+```bash
+python MDRNN_training.py
+```
+The result of the training is the MDRNN_best.pth file, which contains the trained weights for the MDRNN.
+The MDRNN_training.py script uses the following two scripts:
+- MDRNN_dataset_modul.py with the definition of the VAE_dataset class 
+- MDRNN_model.py with the implementation of the VAE model
 
 
 ### Training the Controller
