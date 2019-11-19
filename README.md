@@ -6,7 +6,7 @@ https://github.com/ctallec/world-models/
 
 Our Controller is based on the following repository: https://github.com/pranz24/pytorch-soft-actor-critic, which we downloaded into the root folder of our new "milestone_2" branch.
 
-The scripts described below are located in the duckietown_utils directory of this branch.
+The scripts described below usually are located in the duckietown_utils directory of this branch.
 
 ### Generating rollouts for training
 The following directory structure needs to be created:
@@ -59,4 +59,8 @@ The MDRNN_training.py script uses the following two scripts:
 
 
 ### Training the Controller
-
+The Controller can be trained using the main.py script:
+```bash
+python main.py
+```
+The main.py script uses the observation_wrapper.py script to access the already trained VAE and MDRNN models.
