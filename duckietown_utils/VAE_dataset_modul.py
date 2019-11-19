@@ -4,9 +4,8 @@ import torch
 def VAE_dataset(npzfile, batch_size):
 	class VAE_dataset_class(Dataset):
 		def __init__(self, batch_size):
-
                         self.batch_size = batch_size
-			self.device = torch.device('cuda:0')
+                        self.device = torch.device('cuda:0')
 
 		def transform(self, numpy_img):
 
