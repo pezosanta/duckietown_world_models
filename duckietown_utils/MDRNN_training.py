@@ -83,13 +83,13 @@ def train(epoch):
 
         recon_x, mu, logsigma = vae(obs)
         latent = mu + logsigma.exp() * torch.randn_like(mu)
-        latent=latent.unsqueeze(0)
+        latent=latent.float().unsqueeze(0)
 
         next_recon_x, next_mu, next_logsigma = vae(next_obs)
         next_latent = next_mu + next_logsigma.exp() * torch.randn_like(next_mu)
         next_latent=next_latent.unsqueeze(0)
 
-        action=action.unsqueeze(0)
+        action=action.float().unsqueeze(0)
         reward=reward.unsqueeze(0)
         terminal=terminal.unsqueeze(0)
         
