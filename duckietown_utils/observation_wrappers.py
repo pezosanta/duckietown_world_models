@@ -1,7 +1,7 @@
 import torch
 import gym
 import gym_duckietown
-from duckietown_utils.VAE_model import VAE
+from VAE_model import VAE
 
 #import MDRNN
 
