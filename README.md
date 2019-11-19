@@ -1,7 +1,8 @@
 # duckietown_world_models
 ## team: conDUCKtors - milestone 2 for VITMAV45, 19.11.2019
 
-Implementation of World Models in the Duckietown simulated environment.
+Implementation of World Models in the Duckietown simulated environment. Our work is based on the following repository, in which the World Models was implemented for the carracing gym environment:
+https://github.com/ctallec/world-models/blob/master/trainvae.py
 
 Our Controller is based on the following repository: https://github.com/pranz24/pytorch-soft-actor-critic, which we downloaded into the root folder of our new "milestone_2" branch.
 
@@ -51,6 +52,3 @@ The VAE_training.py script uses the following two scripts:
 
 ### Training the Controller
 
-
-Our work is based on the following repository, in which the World Models was implemented for the carracing gym environment:
-https://github.com/ctallec/world-models/blob/master/trainvae.py
