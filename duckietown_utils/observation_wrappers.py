@@ -1,7 +1,12 @@
 import torch
 import gym
 import gym_duckietown
-from VAE_model import VAE
+import os
+if os.path.isdir('duckietown_utils'):
+    from duckietown_utils.VAE_model import VAE
+else:
+    from VAE_model import VAE
+
 
 #import MDRNN
 
