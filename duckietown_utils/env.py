@@ -2,10 +2,17 @@ import numpy as np
 import gym
 import gym_duckietown
 import logging
+import os
 
-from observation_wrappers import *
-from action_wrappers import *
-from reward_wrappers import *
+if os.path.isdir('duckietown_utils'):
+    from duckietown_utils.observation_wrappers import *
+    from duckietown_utils.action_wrappers import *
+    from duckietown_utils.reward_wrappers import *
+else:
+    from observation_wrappers import *
+    from action_wrappers import *
+    from reward_wrappers import *
+
 
 logging.basicConfig()
 logger = logging.getLogger('gym-duckietown')
