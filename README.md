@@ -66,5 +66,5 @@ The Controller can be trained using the main.py script:
 python main.py
 ```
 We use a SAC controller, which is a Reinforcement Learning algorithm. As an input it takes a 1D-array (length: 128) containing the latent vector corresponding to the current observation (length: 64) and the predicted 
-We observation_wrapper.py script to access the already trained VAE and MDRNN models.
+We observation_wrapper.py script to access the already trained VAE and MDRNN models.  
 Remark: commits submitted after 11:59 PM 19.11.2019 were only minor modifications (e.g. fixing import errors) and they did not affect the implementation of the algorithms.
