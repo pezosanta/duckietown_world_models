@@ -18,7 +18,9 @@ The following directory structure needs to be created:
 ```
 Rollouts are generated using the rollout_generator.py script, e.g.
 ```bash
-python rollout_generator.py 5 0 0
+python rollout_generator.py 100 1 0
+python rollout_generator.py 50 0 0
+python rollout_generator.py 20 2 0
 ```
 rollout_generator.py script has three command line arguments:
 1. number of rollouts to generate
