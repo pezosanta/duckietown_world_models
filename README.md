@@ -22,7 +22,7 @@ python rollout_generator.py 5 0 0
 ```
 rollout_generator.py script has three command line arguments:
 1. number of rollouts to generate
-2. integer to switch between training data and testing data generation mode (1 for training data, rollouts will have 'train' in their filenames; 0 for testing data, rollouts will have 'test' in their filenames)
+2. integer to switch between training, validation and testing data generation mode (1 for training, rollouts will have 'train' in their filenames; 0 for testing, rollouts will have 'test' in their filenames; any other integer value for validation, rollouts will have 'valid' in their filenames)
 3. integer to switch between map usage modes (0 for exclusively using the 'udem1' map, 1 for changing between available maps)
 
 We use two additional scripts, which are modifying the default behaviour of the duckietown gym. Previous studies have shown that the built-in reward function of the duckietown gym needs improvements, which are implemented in the rewared_wrappers.py script. In addition, we use an action wrapper (action_wrappers.py) which makes it possible to change between discrete and continuous action types.
@@ -34,7 +34,7 @@ python visualise_rollouts.py 5 0
 ```
 visualise_rollouts.py script has two command line arguments:
 1. ID of the rollout to visualise (number in the rollout's filename)
-2. integer to switch between training data and testing data generation mode (1 for training data, rollouts with 'train' in their filenames; 0 for testing data, rollouts with 'test' in their filenames)
+2. integer to switch between training, validation and testing data generation mode (1 for training, rollouts will have 'train' in their filenames; 0 for testing, rollouts will have 'test' in their filenames; any other integer value for validation, rollouts will have 'valid' in their filenames)
 
 
 ### Training the VAE
@@ -65,6 +65,4 @@ The Controller can be trained using the main.py script:
 ```bash
 python main.py
 ```
-We use a SAC controller, which is a Reinforcement Learning algorithm. As an input it takes a 1D-array (length: 128) containing the latent vector corresponding to the current observation (length: 64) and the predicted 
-We observation_wrapper.py script to access the already trained VAE and MDRNN models.  
-Remark: commits submitted after 11:59 PM 19.11.2019 were only minor modifications (e.g. fixing import errors) and they did not affect the implementation of the algorithms.
+We use a SAC controller, which is a Reinforcement Learning algorithm. As an input it takes a 1D-array (length: 128) containing the latent vector corresponding to the current observation (length: 64) and the predicted observation (length: 64). The observation_wrapper.py script is used to access the already trained VAE and MDRNN models.  
