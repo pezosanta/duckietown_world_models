@@ -1,6 +1,8 @@
 # duckietown_world_models
 ## team: conDUCKtors - homework for VITMAV45, 13.12.2019
 
+![Demo](Gifs/duckie_test.gif)
+
 Implementation of World Models in the Duckietown simulated environment. Our work is based on the following repository, in which the World Models was implemented for the carracing gym environment:
 https://github.com/ctallec/world-models/
 
