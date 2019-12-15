@@ -2,7 +2,7 @@
 Script for generating rollouts
 """
 
-from env import launch_env, wrap_env
+from duckietown_utils.env import launch_env, wrap_env
 from os.path import join, exists
 import numpy as np
 import sys
