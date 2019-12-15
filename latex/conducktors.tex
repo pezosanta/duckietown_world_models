@@ -150,20 +150,18 @@ We had to modify the architecture of the VAE due to the fact that the resolution
 We performed three different modifications in the following order: firstly we supplemented the VAE network with several convolutional and deconvolutional layers. Thanks to this it was able to encode and decode images with resolution of 480x640. Secondly, we put batchnorm layers between each and every already existing layer. Thirdly, we put in the network several more layers which didn't modify the spatial dimensions of the feature maps being propagated through the network. The number of input channels of these layers equaled the number of output channels.
 
 \subsubsection{MDN-RNN (M)}
-Since we have modified the controller as described below, it was not clear for us how we could combine the MDN-RNN and our new controller. We came to the conclusion that we have to exclude the RNN model from our implementation.
+Since we have modified the controller as described below, it was not clear for us how we could combine the MDN-RNN and our new controller. An important difference compared to the CarRacing-based implementation is that they had the current observation and the proposed action, while what we have is the last action and the observation after that. We came to the conclusion that we have to exclude the RNN model from our implementation.
 
 \subsubsection{Controller (C)}
-Instead of the simple linear model, we used the so called SAC reinforcement learning policy \cite{sac}. SAC uses entropy regularization and is trained to maximize a trade-off between expected return and entropy. Entropy is used to describe the randomness in the policy. A higher value of entropy leads in more exploration, which can accelerate the learning process.\\\\
-
-
+Instead of the simple linear model, we used the so called SAC reinforcement learning policy \cite{sac}.
 
 An AC model in general uses a Q-network to estimate the Q function. Given a sample, the neural network predicts a Q value for every possible action. The weights of the Q network are updated using SGD and backpropagation. A stack of consecutive frames is used as a representation of a single input.
 
+SAC uses entropy regularization and is trained to maximize a trade-off between expected return and entropy. Entropy is used to describe the randomness in the policy. A higher value of entropy leads in more exploration, which can accelerate the learning process.
+
+We made the starting position of our agent fixed, which makes the training easier and faster. We used the so called ''udem1'' map.
 
 
-The initial position of the agent is fixed, which makes the training easier and faster. We used the so called ''udem1'' map.\\\\
-
-The controller has been trained for 150000 steps. The result is an agent, which is able to follow the road and to stay on the right lane.
 
 
 \subsection{Data preparation}
@@ -178,12 +176,11 @@ Since our model has two components, we had to train it sequentially. In the firs
     \item Finally, the VAE network computes the loss based on the similarity of the input (original) and the output (generated) images. If the two images are quite similar, that means that the VAE learned to compress images efficiently into a vector of length 64.
 \end{enumerate}
 
-Note that the deconvolutional network will only be used during training, after that it will be ''deactivated''. Before making a step forward, we will first fix the parameters of the VAE (we do not want it to train any more).
+Note that the deconvolutional network will only be used during training, after that it will be ''deactivated''. Before going further, we will first fix the parameters of the VAE (we do not want it to train any more).
 
-The controller takes the $z$ vector from the VAE, and using the SAC policy, generates an action $a$ as an output. Based on the action of the controller, the environment generates a reward (a float number) that indicates how good decision the controller has made. The aim of the controller is to maximize the reward it gets.
+The controller takes the $z$ vector (length: 64) from the VAE, and using the SAC policy, generates an action $a$ as an output. Based on the action of the controller, the environment generates a reward (a float number) that indicates how good decision the controller has made. The aim of the controller is to maximize the reward it gets.
 
-We use so called wrappers for modifying the default behaviour of the Duckietown Gym environment. Reward wrapper is used based on earlier studies, and it optimises the way the reward is computed. Action wrapper is used to modify 
-
+We use wrappers for modifying the default behaviour of the Duckietown Gym environment. The action wrapper overrides the default shape of the action, so that it tells the SAC that we expect three floating point numbers between 0 and 1. We find the maximum value in this array, and based on its position (1st, 2nd or 3rd) we define the direction of our next discrete step (left, right, straight respectively). The reward wrapper - according the studies carried out earlier - can optimise the way the reward is computed by the environment. The observation wrapper passes the action produced by the SAC (which creates its action using the action wrapper) through the step function of the Gym environment, and transforms the raw image using the VAE into a latent vector.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -212,8 +209,9 @@ For evaluating the performance of image encoding and decoding we used the quanti
 \end{figure}
 
 \subsubsection{Controller}
-During the testing phase, we switch of the Critic part of the SAC, and the Actor is in eval mode, which means that it produces actions, which we can observe in the Duckietown Gym environment.
+During the testing phase, we switch of the Critic part of the SAC, and the Actor is in eval mode, which means that it produces actions that we can observe in the Duckietown Gym environment.
 
+The Controller has been trained for 150000 steps. The result is an agent, which is able to follow the road and to stay on the right lane.
 
 
 %%%%%%%%%%%%%%%%%
@@ -229,8 +227,6 @@ We wish to acknowledge the help provided by Róbert Moni, who has guided us thro
 \subsubsection*{Contributions}
 All of us participated in discovering the literature and reading the papers we required to proceed. In the beginning, we worked together to understand the World Models. This means we have created our first training dataset, and created and trained the first version of our VAE network together. In the early stages of the project, we experimented with the RNN together. As the final deadline came closer, we divided the tasks. The hyperparameter optimization of the VAE was done by Máté Büki. The Controller was implemented and fine-tuned by Péter Zoltán Sánta. Rollout generation was Gábor Tamás's responsibility. In the end, we documented our work together. During the semester, we tried to work as collaboratively as possible to ensure all of us can learn as much as possible.
 
-
-\section*{References}
 
 
 \small
