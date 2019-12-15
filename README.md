@@ -57,6 +57,7 @@ The result of the training is the best_VAE.pth file, which contains the trained 
 The VAE_train_final.py script uses the following two scripts:
 - VAE_dataset_modul.py with the definition of the VAE_dataset class 
 - VAE_model.py with the implementation of the VAE model
+- learning.py with the implementation of EarlyStopping and ReduceLRonPlateau
 
 The VAE can be tested by running either the VAE_calc_iou_torch.py or the VAE_calc_iou_per_channel.py script, depending on what metric is interesting for us. It is important to note that for the evaluation of the VAE, a best_VAE.pth file is needed, which contains the weights of the trained network.
 
