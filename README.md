@@ -27,9 +27,9 @@ Using the above script, the following directory structure is automatically creat
 ```
 Rollouts are generated using the rollout_generator.py script (which is executed automatically by the create_rollouts.py script), e.g.
 ```bash
-python rollout_generator.py 100 1 0
-python rollout_generator.py 50 0 0
-python rollout_generator.py 20 2 0
+python3 rollout_generator.py 100 1 0
+python3 rollout_generator.py 50 0 0
+python3 rollout_generator.py 20 2 0
 ```
 rollout_generator.py script has three command line arguments:
 1. number of rollouts to generate
@@ -51,29 +51,19 @@ visualise_rollouts.py script has two command line arguments:
 ### Training the VAE
 The VAE can be trained using the VAE_training.py script:
 ```bash
-python VAE_training.py
+python3 VAE_train_final.py
 ```
-The result of the training is the VAE_best.pth file, which contains the trained weights for the VAE.
-The VAE_training.py script uses the following two scripts:
+The result of the training is the best_VAE.pth file, which contains the trained weights for the VAE.
+The VAE_train_final.py script uses the following two scripts:
 - VAE_dataset_modul.py with the definition of the VAE_dataset class 
 - VAE_model.py with the implementation of the VAE model
 
-### Training the MDRNN
-The MDRNN can be trained using the MDRNN_training.py script:
-```bash
-python MDRNN_training.py
-```
-The result of the training is the MDRNN_best.pth file, which contains the trained weights for the MDRNN.
-The MDRNN_training.py script uses the following two scripts:
-- mdrnn_dataset.py with the definition of the MDRNN_dataset class 
-- MDRNN_model.py with the implementation of the MDRNN model
+The VAE can be tested by running either the VAE_calc_iou_torch.py or the VAE_calc_iou_per_channel.py script, depending on what metric is interesting for us. It is important to note that for the evaluation of the VAE, a best_VAE.pth file is needed, which contains the weights of the trained network.
 
 
 ### Training the Controller
-
-
-The Controller can be trained using the main.py script:
+The Controller can be trained using the controller_train.py script:
 ```bash
-python main.py
+python3 controller_train.py
 ```
-We use a SAC controller, which is a Reinforcement Learning algorithm. As an input it takes a 1D-array (length: 128) containing the latent vector corresponding to the current observation (length: 64) and the predicted observation (length: 64). The observation_wrapper.py script is used to access the already trained VAE and MDRNN models.  
+We use a SAC controller, which is a Reinforcement Learning algorithm. As an input it takes a 1D-array (length: 128) containing the latent vector corresponding to the current observation (length: 64) and the predicted observation (length: 64). The observation_wrapper.py script is used to access the already trained VAE model.  
