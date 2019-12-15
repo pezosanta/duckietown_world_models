@@ -4,12 +4,19 @@
 Implementation of World Models in the Duckietown simulated environment. Our work is based on the following repository, in which the World Models was implemented for the carracing gym environment:
 https://github.com/ctallec/world-models/
 
-Our Controller is based on the following repository: https://github.com/pranz24/pytorch-soft-actor-critic, which we downloaded into the root folder of our new "milestone_2" branch.
+Our Controller is based on the following repository: https://github.com/pranz24/pytorch-soft-actor-critic, which we downloaded into the root folder of our "milestone_3" branch.
 
 The scripts described below usually are located in the duckietown_utils directory of this branch.
 
 ### Generating rollouts for training
-The following directory structure needs to be created:
+
+Running the following Python script generates the rollouts for training the VAE. It requires three command line arguments: the number of rollouts for training, testing and validation respectively.
+
+```bash
+python3 create_rollouts 100 50 20
+```
+
+Using the above script, the following directory structure is automatically created:
 ```bash
 └── duckietown_utils
     └── datasets
