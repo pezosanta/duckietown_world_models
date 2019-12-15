@@ -1,6 +1,6 @@
 '''
-This executes a training process, within which the predefined VAE model learns from 80 training files, containing .... images and
-is validated by interating through 20 validation files containing ....images. The earlystopping object keeps track of the changes of 
+This executes a training process, within which the predefined VAE model learns from 80 training files, containing approx. 1920 images and
+is validated by interating through 20 validation files containing approx. 480 images. The earlystopping object keeps track of the changes of 
 validation error and in this way governs the saving of model parameters. As for batch_size a pretty high value was adjusted in order to stability.
 '''
 
