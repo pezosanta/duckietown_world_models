@@ -15,7 +15,7 @@ The scripts described below usually are located in the duckietown_utils director
 Running the following Python script generates the rollouts for training the VAE. It requires three command line arguments: the number of rollouts for training, testing and validation, respectively.
 
 ```bash
-python3.6 create_rollouts.py 100 50 20
+python3 create_rollouts.py 100 50 20
 ```
 
 Using the above script, the following directory structure is automatically created:
@@ -27,9 +27,9 @@ Using the above script, the following directory structure is automatically creat
 ```
 Rollouts are generated using the rollout_generator.py script (which is executed automatically by the create_rollouts.py script), e.g.
 ```bash
-python3.6 rollout_generator.py 100 1 0
-python3.6 rollout_generator.py 50 0 0
-python3.6 rollout_generator.py 20 2 0
+python3 rollout_generator.py 100 1 0
+python3 rollout_generator.py 50 0 0
+python3 rollout_generator.py 20 2 0
 ```
 rollout_generator.py script has three command line arguments:
 1. number of rollouts to generate
@@ -41,7 +41,7 @@ We use two additional scripts, which are modifying the default behaviour of the 
 ### Visualising the rollouts
 The generated rollouts can be visualised using the visualise_rollouts.py script, e.g.
 ```bash
-python3.6 visualise_rollouts.py 5 0
+python3 visualise_rollouts.py 5 0
 ```
 visualise_rollouts.py script has two command line arguments:
 1. ID of the rollout to visualise (number in the rollout's filename)
@@ -51,7 +51,7 @@ visualise_rollouts.py script has two command line arguments:
 ### Training the VAE
 The VAE can be trained using the VAE_train_final.py script:
 ```bash
-python3.6 VAE_train_final.py
+python3 VAE_train_final.py
 ```
 The result of the training is the best_VAE.pth file, which contains the trained weights for the VAE.
 The VAE_train_final.py script uses the following two scripts:
@@ -65,16 +65,16 @@ The VAE can be tested by running either the VAE_calc_iou_torch.py or the VAE_cal
 ### Training the Controller
 The Controller can be trained using the controller_train.py script:
 ```bash
-python3.6 controller_train.py
+python3 controller_train.py
 ```
 
 The Controller can be tested using the controller_test.py script:
 ```bash
-python3.6 controller_test.py
+python3 controller_test.py
 ```
 By default, the training and testing is carried out without render the images. If you want to render the images as well, you can specify that in the following way:
 ```bash
-python3.6 controller_train.py --render
-python3.6 controller_test.py --render
+python3 controller_train.py --render
+python3 controller_test.py --render
 ```
 For training the Controller, we use Reinforcement learning based on the Soft Actor Critic (SAC) policy.
