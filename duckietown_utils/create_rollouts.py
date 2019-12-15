@@ -8,9 +8,12 @@ if len(sys.argv) < 4:
 cwd = os.getcwd()
 
 # Creating required directory structure
-os.mkdir(cwd + "/datasets")
-os.mkdir(cwd + "/datasets/duckie")
-os.mkdir(cwd + "/datasets/images")
+if os.path.isdir("datasets") == False:
+    os.mkdir(cwd + "/datasets")
+if os.path.isdir("datasets/duckie") == False:
+    os.mkdir(cwd + "/datasets/duckie")
+if os.path.isdir("datasets/images") == False:
+    os.mkdir(cwd + "/datasets/images")
 
 # Training dataset generation
 os.system("python3 generator.py %d 1 0" %int(sys.argv[1]))
