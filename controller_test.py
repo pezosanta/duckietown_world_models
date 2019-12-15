@@ -46,6 +46,8 @@ parser.add_argument('--replay_size', type=int, default=100000, metavar='N',
                     help='size of replay buffer (default: 10000000)')
 parser.add_argument('--cuda', action="store_true",
                     help='run on CUDA (default: False)')
+parser.add_argument('--render', action="store_true",
+                    help='use screen (default: False)')
 args = parser.parse_args()
 
 # Environment
@@ -109,6 +111,10 @@ for _  in range(episodes):
     #obs_list = []
 
     state = env.reset()
+
+    if args.render:
+        env.render()
+
     episode_reward = 0
     done = False
     
@@ -120,7 +126,10 @@ for _  in range(episodes):
         #next_state, reward, done, orig_state = env.step(action)
 
         next_state, reward, done, _ = env.step(action)
-        env.render()
+
+        if args.render:
+            env.render()
+
         episode_reward += reward
 
         state = next_state
