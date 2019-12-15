@@ -13,24 +13,31 @@ class DiscreteWrapper(gym.ActionWrapper):
         gym.ActionWrapper.__init__(self, env)
         # self.action_space = spaces.Discrete(4)
         self.action_space = spaces.Box(low = 0., high = 1., shape = (3,))
+        #self.action_space = spaces.Discrete(3)
+
 
     def action(self, action):
         argmax_action = np.argmax(action)
         # sampled_action = np.random.sample([0, 1, 2, 3], 1, p=action)
+        
         # Turn left
         if argmax_action == 0:
-            vels = [0, +1.]
+            vels = [0., 1.]
         # Turn right
         elif argmax_action == 1:
-            vels = [1., 0]
+            vels = [1., 0.]
         # Go forward
         elif argmax_action == 2:
             vels = [1., 1.]
-        # # Stop
-        # elif argmax_action == 3:
-        #     vels = [0., 0.]
+        # Go backward
+        #elif argmax_action == 3:
+            #vels = [-1., -1.] #
+        # Stop
+        #elif argmax_action == 4:
+            #vels = [0., 0.]
         else:
             assert False, "unknown action"
+       
         return np.array(vels)
 
 

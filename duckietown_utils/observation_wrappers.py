@@ -2,22 +2,25 @@ import torch
 import gym
 import gym_duckietown
 import os
-if os.path.isdir('duckietown_utils'):
-    from duckietown_utils.VAE_model import VAE
-else:
-    from VAE_model import VAE
+from duckietown_utils.VAE_model_with_batchnorm import VAE
+#from duckietown_utils.VAE_model_16000 import VAE
+#from duckietown_utils.MDRNN_model import MDRNN
 
-
-#import MDRNN
-
-#VAE_CHECKPOINT_PATH = '/content/drive/My Drive/Duckietown - World Models/model.pth'
-#MDRNN_CHECKPOINT_PATH = '/content/drive/My Drive/Duckietown - World Models/model.pth'
-
-LSIZE = 64
+'''
+# Google Colab paths
+VAE_CHECKPOINT_PATH = '/content/drive/My Drive/Duckietown - World Models/model.pth'
+MDRNN_CHECKPOINT_PATH = '/content/drive/My Drive/Duckietown - World Models/model.pth'
+# Finally we did not use MDRNN
+MDRNN_CHECKPOINT_PATH = './duckietown_utils/best_MDRNN.pth'
 ASIZE = 2
 RSIZE = 25
-VAE_CHECKPOINT_PATH = './duckietown_utils/best_VAE.pth'
-#VAE_CHECKPOINT_PATH = 'best_VAE.pth'
+'''
+
+# VAE latent_obs (output vector) size
+LSIZE = 64 
+VAE_CHECKPOINT_PATH = './duckietown_utils/best_VAE_with_batchnorm.pth'
+#VAE_CHECKPOINT_PATH = './duckietown_utils/best_VAE_16000.pth'
+
 
 class VAEWrapper(gym.ObservationWrapper):
     def __init__(self, env = None):
@@ -27,21 +30,24 @@ class VAEWrapper(gym.ObservationWrapper):
         self.VAE_checkpoint = torch.load(VAE_CHECKPOINT_PATH)
         print('CHECKPOINT: ' + str(len(self.VAE_checkpoint)))
 
-        self.VAE_model = VAE(img_channels = 3, latent_size = 64)#.load_state_dict(self.VAE_checkpoint['model_state_dict'])#.to(device = torch.device("cuda:0")).eval()
-        self.VAE_model.cuda()
-        self.VAE_model.eval()
+        self.VAE_model = VAE(img_channels = 3, latent_size = LSIZE)#.load_state_dict(self.VAE_checkpoint['model_state_dict'])#.to(device = torch.device("cuda:0")).eval()
         self.VAE_model.load_state_dict(self.VAE_checkpoint['model_state_dict'])
+        #self.VAE_model.cuda()
+        self.VAE_model.eval()
 
-        #self.VAE_model = VAE_model(img_channels = 3, latent_size = 64).load_state_dict(self.VAE_checkpoint['model_state_dict']).eval()
-
-        #self.MDRNN_checkpoint = torch.load(MDRNN_CHECKPOINT_PATH)
-        #self.MDRNN_model = MDRNN(latents = LSIZE, actions = ASIZE, hiddens = RSIZE, gaussians = 5).load_state_dict(self.MDRNN_checkpoint['model_state_dict']).to(device = torch.device("cuda:0")).eval()
-        
+        '''
+        # Finally we did not use MDRNN
+        self.MDRNN_checkpoint = torch.load(MDRNN_CHECKPOINT_PATH)
+        self.MDRNN_model = MDRNN(latents = LSIZE, actions = ASIZE, hiddens = RSIZE, gaussians = 5)#.load_state_dict(self.MDRNN_checkpoint['model_state_dict']).to(device = torch.device("cuda:0")).eval()
+        self.MDRNN_model.load_state_dict(self.MDRNN_checkpoint['model_state_dict'], strict = False)
+        self.MDRNN_model.cuda()
+        self.MDRNN_model.eval()
+        '''
        
     def observation(self, observation):
-        """Note: vae.encode performs the normalization, so do not normalize or scale the image before VAEWrapper!!!"""
+        
         with torch.no_grad():
-            tensor_observation = torch.from_numpy(observation / 255.0).permute(2,0,1).float().unsqueeze(0).to(device = torch.device("cuda:0")) # 4D tensort meg kell még oldani !
+            tensor_observation = torch.from_numpy(observation / 255.0).permute(2,0,1).float().unsqueeze(0).to(device = torch.device('cpu'))#"cuda:0")) 
 
             _, mu, logsigma = self.VAE_model(tensor_observation)
 
@@ -50,26 +56,13 @@ class VAEWrapper(gym.ObservationWrapper):
             numpy_latent_obs = tensor_latent_obs.squeeze().cpu().detach().numpy()
 
         return numpy_latent_obs
-
-        '''
-        h = self.render_obs()
-        print('h: ' + str(h.shape))
-
-        z = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]     
-        print('obs shape: ' + str(observation[0].shape) + str(len(observation[1])))
-        print(type(observation[0]))
-        #obs = observation[0]
-        #z = observation[1]  
-        #print('INSIDE WRAPPER, OBS.SHAPE:{}, Z.SHAPE:{} '.format(obs, z)) 
-        return z
-        '''
-
     
     def reset(self, **kwargs):
         observation = self.env.reset(**kwargs)
-        print('---------- WE ARE IN WRAP RESET! -------------------')
+        #print('---------- WE ARE IN WRAP RESET! -------------------')
 
         '''
+        # Finally we did not use MDRNN
         with torch.no_grad():
             tensor_obs = torch.from_numpy(observation / 255.0).float().permute(2, 0, 1).unsqueeze(0)
             _, mu, logsigma = vae(tensor_obs)
@@ -82,25 +75,13 @@ class VAEWrapper(gym.ObservationWrapper):
             concat_latent_obs = torch.cat((latent_tensor_obs, latent_next_tensor_obs))
             numpy_concat_latent_obs = concat_latent_obs.detach().numpy()
         '''
-        
-        return self.observation(observation)
-        #return numpy_concat_latent_obs
 
+        return self.observation(observation)#, observation
 
     def step(self, action):
-        print('---------- WE ARE IN WRAP STEP! -------------------')
-        obs = self.render_obs()
-        
-        latent_obs = self.observation(obs)
-        print('VAE utan a latent_obs:{} '.format(latent_obs.shape))
-
-
+        #print('---------- WE ARE IN WRAP STEP! -------------------')
+    
         observation, reward, done, info = self.env.step(action)
-        print('action: ' + str(type(action)) + str(action.shape))
-        return self.observation(observation), reward, done, info
         
-
-    '''
-    def observation(self, observation):
-        raise NotImplementedError
-    '''
+        return self.observation(observation), reward, done, info# observation
+        
