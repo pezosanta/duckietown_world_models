@@ -1,4 +1,9 @@
 import os
+import sys
+
+if len(sys.argv) < 4:
+    print("usage: %s train test validation" %sys.argv[0])
+    sys.exit(0)
 
 cwd = os.getcwd()
 
@@ -8,10 +13,10 @@ os.mkdir(cwd + "/datasets/duckie")
 os.mkdir(cwd + "/datasets/images")
 
 # Training dataset generation
-os.system("python3 generator.py 100 1 0")
+os.system("python3 generator.py %d 1 0" %int(sys.argv[1]))
 
 # Test dataset generation
-os.system("python3 generator.py 50 0 0")
+os.system("python3 generator.py %d 0 0" %int(sys.argv[2]))
 
 # Validation dataset generation
-os.system("python3 generator.py 20 2 0")
+os.system("python3 generator.py %d 2 0" %int(sys.argv[3]))
