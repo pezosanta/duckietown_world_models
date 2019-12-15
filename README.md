@@ -10,7 +10,7 @@ The scripts described below usually are located in the duckietown_utils director
 
 ### Generating rollouts for training
 
-Running the following Python script generates the rollouts for training the VAE. It requires three command line arguments: the number of rollouts for training, testing and validation respectively.
+Running the following Python script generates the rollouts for training the VAE. It requires three command line arguments: the number of rollouts for training, testing and validation, respectively.
 
 ```bash
 python3 create_rollouts.py 100 50 20
@@ -23,7 +23,7 @@ Using the above script, the following directory structure is automatically creat
         ├── duckie
         └── images
 ```
-Rollouts are generated using the rollout_generator.py script, e.g.
+Rollouts are generated using the rollout_generator.py script (which is executed automatically by the create_rollouts.py script), e.g.
 ```bash
 python rollout_generator.py 100 1 0
 python rollout_generator.py 50 0 0
