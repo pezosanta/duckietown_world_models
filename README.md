@@ -67,4 +67,4 @@ The Controller can be trained using the controller_train.py script:
 ```bash
 python3.6 controller_train.py
 ```
-We use a SAC controller, which is a Reinforcement Learning algorithm. As an input it takes a 1D-array (length: 128) containing the latent vector corresponding to the current observation (length: 64) and the predicted observation (length: 64). The observation_wrapper.py script is used to access the already trained VAE model.  
+For training the Controller, we use Reinforcement learning based on the Soft Actor Critic (SAC) policy.
