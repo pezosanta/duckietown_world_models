@@ -67,4 +67,14 @@ The Controller can be trained using the controller_train.py script:
 ```bash
 python3.6 controller_train.py
 ```
+
+The Controller can be trained using the controller_train.py script:
+```bash
+python3.6 controller_test.py
+```
+By default, the training and testing is carried out without showing the images. If you want to show the images as well, you can specify that in the following way:
+```bash
+python3.6 controller_train.py --render
+python3.6 controller_test.py --render
+```
 For training the Controller, we use Reinforcement learning based on the Soft Actor Critic (SAC) policy.
