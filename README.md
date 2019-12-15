@@ -49,7 +49,7 @@ visualise_rollouts.py script has two command line arguments:
 
 
 ### Training the VAE
-The VAE can be trained using the VAE_training.py script:
+The VAE can be trained using the VAE_train_final.py script:
 ```bash
 python3.6 VAE_train_final.py
 ```
