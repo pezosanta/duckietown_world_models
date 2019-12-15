@@ -14,11 +14,13 @@ if len(sys.argv) < 4:
 rollouts = int(sys.argv[1])
 
 # creating a mode string, which we will use for naming the output file
-train = bool(int(sys.argv[2]))
-if train:
+train = int(int(sys.argv[2]))
+if train == 1:
     mode = "train"
-else:
+elif train == 0:
     mode = "test"
+else:
+    mode = "valid"
 
 # if change_maps is True, multiple maps are used, otherwise the udem1 map
 change_maps = bool(int(sys.argv[3]))
@@ -45,16 +47,18 @@ def generate_data(rollouts, data_dir):
     assert exists(data_dir), "The data directory does not exist..."
 
     # Initializing an environment using the action and reward wrappers provided
-    env = launch_env(map_name = training_map[10])
-    env = wrap_env(action_type = action_type[0], env = env, add_observation_wrappers = False, add_action_wrappers = True, add_reward_wrappers = True, lane_penalty = False)
+    if change_maps == False:
+        env = launch_env(map_name = training_map[10])
+        env = wrap_env(action_type = action_type[0], env = env, add_observation_wrappers = False, add_action_wrappers = True, add_reward_wrappers = True, lane_penalty = False)
 
     # Enabling the script to use different maps
     # map_counter stores the position in the training_map array
-    map_counter = 0
+    map_counter = -1
 
     for i in range(rollouts):
-        if change_maps and i % 4 == 3:
+        if change_maps and i % (rollouts / len(training_map)) == 0:
             map_counter += 1
+            print(training_map[map_counter])
 
             env = launch_env(map_name = training_map[map_counter])
             env = wrap_env(action_type = action_type[0], env = env, add_observation_wrappers = False, add_action_wrappers = True, add_reward_wrappers = True, lane_penalty = False)
