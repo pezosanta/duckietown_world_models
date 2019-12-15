@@ -84,11 +84,11 @@ class GaussianPolicy(nn.Module):
                 (action_space.high + action_space.low) / 2.)
 
     def forward(self, state):
-        print('inside gauss 1, state.shape: ' + str(state.shape))
+        #print('inside gauss 1, state.shape: ' + str(state.shape))
         x = F.relu(self.linear1(state))
-        print('inside gauss 2, x.shape: ' + str(x.shape))
+        #print('inside gauss 2, x.shape: ' + str(x.shape))
         x = F.relu(self.linear2(x))
-        print('inside gauss 3, x.shape: ' + str(x.shape))
+        #print('inside gauss 3, x.shape: ' + str(x.shape))
         mean = self.mean_linear(x)
         log_std = self.log_std_linear(x)
         log_std = torch.clamp(log_std, min=LOG_SIG_MIN, max=LOG_SIG_MAX)

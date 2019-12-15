@@ -108,23 +108,34 @@ class SAC(object):
         return qf1_loss.item(), qf2_loss.item(), policy_loss.item(), alpha_loss.item(), alpha_tlogs.item()
 
     # Save model parameters
-    def save_model(self, env_name, suffix="", actor_path=None, critic_path=None):
-        if not os.path.exists('models/'):
-            os.makedirs('models/')
+    def save_model(self, reward, env_name=None, suffix="", actor_path=None, critic_path=None):
+        #if not os.path.exists('models/'):
+        #    os.makedirs('models/')
+
 
         if actor_path is None:
             actor_path = "models/sac_actor_{}_{}".format(env_name, suffix)
         if critic_path is None:
             critic_path = "models/sac_critic_{}_{}".format(env_name, suffix)
-        print('Saving models to {} and {}'.format(actor_path, critic_path))
-        torch.save(self.policy.state_dict(), actor_path)
+
+        print('Saving models with reward {} to {} and {}'.format(reward, actor_path, critic_path))
+        print("----------------------------------------")
+        #torch.save(self.policy.state_dict(), actor_path)
+        torch.save({
+                    'model_state_dict': self.policy.state_dict(),
+                    'best_avg_reward': reward
+                    }, actor_path)
         torch.save(self.critic.state_dict(), critic_path)
     
     # Load model parameters
     def load_model(self, actor_path, critic_path):
+        print("----------------------------------------")
         print('Loading models from {} and {}'.format(actor_path, critic_path))
+        print("----------------------------------------")
         if actor_path is not None:
-            self.policy.load_state_dict(torch.load(actor_path))
+            policy_checkpoint = torch.load(actor_path)
+            self.policy.load_state_dict(policy_checkpoint['model_state_dict'])
         if critic_path is not None:
             self.critic.load_state_dict(torch.load(critic_path))
+        return policy_checkpoint['best_avg_reward']
 
