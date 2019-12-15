@@ -13,7 +13,7 @@ The scripts described below usually are located in the duckietown_utils director
 Running the following Python script generates the rollouts for training the VAE. It requires three command line arguments: the number of rollouts for training, testing and validation respectively.
 
 ```bash
-python3 create_rollouts 100 50 20
+python3 create_rollouts.py 100 50 20
 ```
 
 Using the above script, the following directory structure is automatically created:
