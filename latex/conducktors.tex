@@ -83,7 +83,7 @@ In our homework, we use a reinforcement learning framework to teach an agent to 
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%
 
-Many of the algorithms in the field of artifical intelligence are inspired by how humans learn and think. Our brain is able to learn an abstract representation of the information it gets from our environment \cite{brain1}, \cite{brain2}. Our homework is based on a model called World Models \cite{worldmodels}, which mimics this behaviour. In their article, the authors present a new framework for facilitating the policy evolution in a reinforcement learning task. The main idea of their work is that they transform the environment seen by the agent into a so called latent vector, and the reinforcement learning algorithm is trained using the already transformed reality. So the agent learns in its own world, hence the name of the model.
+Many of the algorithms in the field of artifical intelligence are inspired by how humans learn and think. Our brain is able to learn an abstract representation of the information it gets from our environment. Our homework is based on a model called World Models \cite{worldmodels}, which mimics this behaviour. In their article, the authors present a new framework for facilitating the policy evolution in a reinforcement learning \cite{rl} task. The main idea of their work is that they transform the environment seen by the agent into a so called latent vector, and the reinforcement learning algorithm is trained using the already transformed reality. So the agent learns in its own world, hence the name of the model. It is important to note that the idea of using a VAE network together with an evolutional reinforcement learning algorithm is not unique, there is an article \cite{vae_es} published in 2017 that already using this idea.
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -131,7 +131,10 @@ The architecture of the Memory RNN network is shown in figure \ref{fig:rnn}.
 \end{figure}
 
 \subsection{Controller (C)}
-In the original implementation the controller uses a simple single layer linear model which maps the vision module’s observation $z$ and the memory module’s hidden state $h$ to an action $a$ at each time step. The output is an action-vector (numpy array) of size 2 containing the quantitative representation of the velocity [-1.0 to 1.0] and the angle of the steering wheel [-1.0 to 1.0].
+In their implementation, the authors used the Covariance-Matrix Adaptation Evolution Strategy
+(CMA-ES) \cite{cma}.
+
+The controller consists of a simple single layer linear model which maps the vision module’s observation $z$ and the memory module’s hidden state $h$ to an action $a$ at each time step. The output is an action-vector (numpy array) of size 2 containing the quantitative representation of the velocity [-1.0 to 1.0] and the angle of the steering wheel [-1.0 to 1.0].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -159,15 +162,12 @@ An AC model in general uses a Q-network to estimate the Q function. Given a samp
 
 SAC uses entropy regularization and is trained to maximize a trade-off between expected return and entropy. Entropy is used to describe the randomness in the policy. A higher value of entropy leads in more exploration, which can accelerate the learning process.
 
-We made the starting position of our agent fixed, which makes the training easier and faster. We used the so called ''udem1'' map.
-
-
-
-
 \subsection{Data preparation}
 We have created a dataset of 100 training, 50 testing and 20 validation rollouts. A rollout consists of four arrays (compressed in .npz files) containing the values returned by the step function which is involved in the Gym environment class. The images given by step() are located in "observations".
 
 \subsection{Training the model}
+We made the starting position of our agent fixed, which makes the training easier and faster. We used the so called ''udem1'' map.
+
 Since our model has two components, we had to train it sequentially. In the first step, the VAE network was trained independently in the following way:
 \begin{enumerate}
     \item The network takes an image with a size of (640 x 480 x 3) as an input.
