@@ -72,7 +72,7 @@ The Controller can be tested using the controller_test.py script:
 ```bash
 python3 controller_test.py
 ```
-By default, the training and testing is carried out without render the images. If you want to render the images as well, you can specify that in the following way:
+By default, the training and testing is carried out without rendering the images. If you want to render the images as well, you can specify that in the following way:
 ```bash
 python3 controller_train.py --render
 python3 controller_test.py --render
